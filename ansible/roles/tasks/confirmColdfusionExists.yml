@@ -1,0 +1,6 @@
+---
+- name: Ensure Coldfusion service exists and is started automatically
+  win_service:
+   name: Coldfusion 9 Application Server
+   start_mode: auto
+   state: started

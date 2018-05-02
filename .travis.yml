@@ -1,0 +1,41 @@
+---
+sudo: required
+dist: trusty
+
+language: python
+python: "2.7"
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install curl
+  - sudo apt-get install jq
+  - pip install awscli
+
+install:
+  - pip install ansible
+  - pip install -r ansible/requirements.txt
+
+before_script:
+
+script:
+  # Allow Travis ingress
+  - bash travisIngress.sh authorize $SECURITY_GROUP_ID $PORT
+
+  # sleep to allow the AWS ClI a chance to whitelist the IPs
+  - sleep 10s
+
+  # Check the playbook syntax.
+  - ansible-playbook -i ansible/hosts ansible/playbook_windows.yml --syntax-check
+
+  # Run the playbook
+  - ansible-playbook -i ansible/hosts ansible/playbook_windows.yml
+
+  # remove this ip address from the AWS SG
+  - bash travisIngress.sh revoke $SECURITY_GROUP_ID $PORT
+
+after_script:
+

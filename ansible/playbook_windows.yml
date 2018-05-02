@@ -1,0 +1,12 @@
+---
+
+- name: Check to see if a service exists
+
+  gather_facts: false
+
+  hosts:
+  - windows
+
+  tasks:
+  - import_tasks: roles/tasks/confirmColdfusionExists.yml
+

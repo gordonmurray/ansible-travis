@@ -1,0 +1,12 @@
+---
+
+- name: Check to see if a service exists
+
+  gather_facts: false
+
+  hosts:
+  - linux
+
+  tasks:
+  - import_tasks: roles/tasks/confirmApacheExists.yml
+

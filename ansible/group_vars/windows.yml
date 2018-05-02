@@ -1,0 +1,5 @@
+ansible_user: "{{ lookup('env', 'username') }}"
+ansible_password: "{{ lookup('env', 'password') }}"
+ansible_port: "{{ lookup('env', 'PORT') }}"
+ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore
